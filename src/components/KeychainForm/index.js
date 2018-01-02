@@ -2,17 +2,18 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { change } from "redux-form";
 import KeychainForm from "./KeychainForm";
-//import { doTransfer } from "../../thunks/transfer";
+//import { doPersist } from "../../thunks/persist";
 
 
 function doEncrypt(key, password) {
-    //todo: Implement
-    return key;
+    var AES = require("crypto-js/aes");
+    var cipher = AES.encrypt(key, password);
+    return cipher;
 }
 
 function doSave(guardian, keyname, encpubkey, encprikey) {
     //todo: Implement
-    return key;
+    return keyname;
 }
 
 const mapDispatchToProps = dispatch => ({

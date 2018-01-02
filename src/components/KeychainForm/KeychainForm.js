@@ -3,17 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import renderField from "components/Field";
 import Button from "components/Button";
 
-const numbersOnly = (value, previousValue) =>
-  /^\d*\.?\d{0,4}$/.test(value) ? value : previousValue;
-
-const Label = ({ updateAmount }) => (
-  <p>
-    Amount
-    <a className="help" onClick={updateAmount}>
-      Use Full Balance
-    </a>
-  </p>
-);
 
 const KeychainForm = ({
   callAPI,
@@ -69,13 +58,13 @@ const KeychainForm = ({
 
       <Field
           aria-describedby="password"
-          className="password"
+          className="input"
           id="password"
           label="Password"
           name="password"
           required
           component={renderField}
-          type="text"
+          type="password"
       />
 
     <div className="field is-grouped u-mt6">
