@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> renders without crashing 1`] = `
+<header
+  className="hero"
+>
+  <div
+    className="level is-mobile"
+  >
+    <div
+      className="level-left"
+    >
+      <div
+        className="control level-item is-hidden-tablet"
+      >
+        <button
+          className="button is-primary u-mr1"
+          onClick={undefined}
+        >
+          <span
+            className="icon-menu"
+          />
+        </button>
+      </div>
+      <div
+        className="level-item"
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          <img
+            alt=""
+            className="image"
+            src="/images/logo.svg"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+`;

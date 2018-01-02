@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<List /> renders without crashing 1`] = `
+<ul>
+  <p>
+    One
+  </p>
+  <p>
+    Two
+  </p>
+  <p>
+    Three
+  </p>
+</ul>
+`;

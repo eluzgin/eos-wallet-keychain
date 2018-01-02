@@ -1,0 +1,32 @@
+@import "../../styles/custom_variables.scss";
+
+.transaction {
+  li {
+    .heading {
+      font-size: 0.75rem;
+      line-height: 1rem;
+      font-weight: normal;
+      color: white;
+      margin-bottom: 0;
+    }
+    .title {
+      font-size: 1.375rem;
+      line-height: 1.375rem;
+      font-weight: normal;
+      color: white;
+    }
+    a {
+      color: $primary;
+    }
+    .date {
+      width: 30px;
+    }
+    .iconTransferTo {
+      color: $red;
+    }
+    
+    .iconTransferFrom {
+      color: $green;
+    }
+  }
+}

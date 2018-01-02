@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Shortcuts /> renders without crashing 1`] = `
+<ul
+  className="menulist"
+>
+  <li>
+    <ul
+      className="menulist"
+    >
+      <li>
+        <a
+          aria-current="true"
+          className="active"
+          href="/"
+          onClick={[Function]}
+          style={Object {}}
+        >
+          <span
+            className="icon-transfer u-mr1"
+          />
+          Transfer
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a
+      aria-current={false}
+      className={undefined}
+      href="/users"
+      onClick={[Function]}
+      style={undefined}
+    >
+      <span
+        className={undefined}
+      />
+      Users
+    </a>
+  </li>
+</ul>
+`;

@@ -1,0 +1,5 @@
+Loading example: 
+
+```js
+<Loading />
+```

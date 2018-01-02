@@ -1,0 +1,99 @@
+@import "../../styles/custom_variables.scss";
+
+.menulist {
+	li {
+		position: relative;
+		a {
+			display: block;
+			padding: 1.125rem 1.5rem;
+			color: white;
+			text-transform: uppercase;
+			font-size: 0.875rem;
+			font-weight: bold;
+			transition: background .25s, padding .25s;
+			&:after {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				content: "";
+				height: 1px;
+				width: 100%;
+				background: linear-gradient(to right, $grey-60, $grey-80);
+			}
+			span {
+				color: $primary;
+				&:after {
+					transition: border-left .25s;
+					color: red;
+					content: "";
+					position: absolute;
+					right: -8px;
+					top: 0;
+					width: 0;
+					height: 0;
+					border-top: 28px solid transparent;
+					border-bottom: 28px solid transparent;
+					border-left: 8px solid transparent;
+					z-index: 1;
+				}
+			}
+			&.active, &.active:hover {
+				background-color: $orange;
+				padding-left: 1.5rem;
+				:before {
+					color: white;
+				}
+				:after {
+					border-left: 8px solid $orange;
+					@include mobile {
+						display: none;
+					}
+				}
+			}
+			&:hover {
+				background-color: darken($grey-mid, 2%);
+				padding-left: 2rem;
+			}
+		}
+	}
+	.menulist {
+		a {
+			text-transform: capitalize;
+		}
+	}
+	&.logged_in {
+		background-color: $grey-light;
+		position: relative;
+		box-shadow: none;
+		&:before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			content: "";
+			height: 1px;
+			width: 100%;
+			background: linear-gradient(to right, $grey-40, $grey-60);
+		}
+		li {
+			a {
+				text-transform: capitalize;
+				&:after {
+					background: linear-gradient(to right, $grey-40, $grey-60);
+				}
+				&:hover {
+					background-color: darken($grey-light, 2%);
+				}
+				&.active:hover {
+					background-color: $orange;
+				}
+			}
+		}
+		&:after {
+			position: absolute;
+			width: 100%;
+			height: 10px;
+			content: "";
+			box-shadow: inset 0px 10px 10px -5px rgba($grey-80,0.3);
+		}
+	}
+}

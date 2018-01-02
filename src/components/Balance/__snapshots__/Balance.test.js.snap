@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Balance /> renders without crashing 1`] = `
+<div
+  className="-is-logged-in"
+>
+  <div
+    className="financials u-p3"
+  >
+    <div
+      className="scaletext-wrapper"
+      style={
+        Object {
+          "fontSize": "inherit",
+          "height": "100%",
+          "overflow": "hidden",
+          "width": "100%",
+        }
+      }
+    >
+      <p
+        className=""
+        fontSize="inherit"
+      >
+        0.00
+      </p>
+    </div>
+    <p
+      className="full_balance is-6"
+    >
+      0.0000
+    </p>
+  </div>
+</div>
+`;

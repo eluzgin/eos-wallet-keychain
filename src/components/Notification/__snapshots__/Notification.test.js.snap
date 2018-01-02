@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Notification /> renders without crashing 1`] = `
+<div
+  className=""
+>
+  <div
+    className="icon-fail_warn"
+  />
+  Connection error
+  <span
+    className="icon-x"
+    onClick={[Function]}
+  />
+</div>
+`;

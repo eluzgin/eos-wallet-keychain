@@ -1,0 +1,79 @@
+@import "../../styles/custom_variables.scss";
+
+.notification {
+  width: 100%;
+  border-radius: 8px;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  padding: 0.875rem 3rem 0.875rem 4.5rem;
+  position: relative;
+  font-size: 1rem;
+  .icon {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 6px 0 0 6px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.5rem
+  }
+  .close {
+    position: absolute;
+    top: 0.875rem;
+    right: 1rem;
+  }
+  &.min {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1.75rem 0.5rem 2.5rem;
+    font-size: 0.75rem;
+    .icon {
+      width: 30px;
+      line-height: 35px;
+      font-size: 1rem
+    }
+    .close {
+      top: 0.5rem;
+      right: 0.625rem;
+    }
+  }
+}
+
+.error {
+  background-color: #574750;
+  border: 1px solid $red;
+
+  .icon {
+    background-color: $red;
+  }
+}
+
+.success {
+  background-color: #475753;
+  border: 1px solid $green;
+
+  .icon {
+    background-color: $green;
+    color: $grey-80;
+  }
+}
+
+.warn {
+  background-color: #616253;
+  border: 1px solid #d8be50;
+
+  .icon {
+    background-color: #d8be50;
+  }
+}
+
+.info {
+  background-color: #455b74;
+  border: 1px solid $blue;
+
+  .icon {
+    background-color: $blue;
+    color: white;
+  }
+}

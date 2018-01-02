@@ -1,0 +1,39 @@
+@import "../../node_modules/bulma/sass/utilities/initial-variables.sass";
+@import "../../node_modules/bulma/sass/utilities/functions.sass";
+@import "../../node_modules/bulma/sass/utilities/mixins.sass";
+
+$primary: #4b9af5;
+$secondary: #6a7e95;
+$secondary-inverse: findColorInvert($secondary);
+$orange: #d75f4c;
+$orange-inverse: findColorInvert($orange);
+$grey-text: #bbbbbb;
+$grey-dark: #3a4249;
+$grey-mid: #575f68;
+$grey-light: #69727c;
+$grey-main: #434b54;
+$green: #bedf5d;
+$green-inverse: findColorInvert($green);
+$red: #ba303e;
+$red-inverse: findColorInvert($red);
+$grey-100: #3a4249;
+$grey-100-inverse: findColorInvert($grey-100);
+$grey-80: #434B54;
+$grey-80-inverse: findColorInvert($grey-80);
+$grey-60: #575F68;
+$grey-60-inverse: findColorInvert($grey-60);
+$grey-40: #69727C;
+$grey-40-inverse: findColorInvert($grey-40);
+
+$additional-colors: (
+  "secondary": ($secondary, $secondary-inverse),
+  "orange": ($orange, $orange-inverse),
+  "green": ($green, $green-inverse),
+  "red": ($red, $red-inverse),
+  "grey-100": ($grey-100, $grey-100-inverse),
+  "grey-80": ($grey-80, $grey-80-inverse),
+  "grey-60": ($grey-60, $grey-60-inverse),
+  "grey-40": ($grey-40, $grey-40-inverse),
+);
+
+@import "../../node_modules/bulma/sass/utilities/derived-variables.sass";

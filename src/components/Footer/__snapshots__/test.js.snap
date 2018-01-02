@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer /> renders without crashing 1`] = `
+<footer>
+  <div
+    className="columns u-pt2 is-variable is-3"
+  >
+    <div
+      className="column has-text-left-tablet has-text-centered-mobile"
+    >
+      <p>
+        Copyright 2017 | All Rights Reserved
+      </p>
+    </div>
+  </div>
+</footer>
+`;

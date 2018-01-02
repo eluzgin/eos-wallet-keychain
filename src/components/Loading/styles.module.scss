@@ -1,0 +1,27 @@
+.loading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  .loading_image {
+    width: 200px;
+  }
+  
+  .icon_loader {
+    color: #bedf5d;
+    font-size: 3em;
+    animation: rotate .75s infinite linear;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
