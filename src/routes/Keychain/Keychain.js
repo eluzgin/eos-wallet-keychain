@@ -24,7 +24,7 @@ const Keychain = () => (
                 </div>
             </article>
             <article className="section">
-                <h5 className="title is-5">Who is Guardian and why I need it?</h5>
+                <h5 className="title is-5">What is Guardian field for?</h5>
                 <div className="box">
                     The Guardian is fully optional for users who want an ability to retrieve their wallet keys even
                     if they are locked out of their EOS master wallet due to lost private key, etc.

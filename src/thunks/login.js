@@ -40,5 +40,6 @@ export const doLogout = () => (dispatch: Dispatch<*>) => {
   dispatch(reset("transfer"));
   dispatch(reset("profile"));
   dispatch(reset("connect-eos-account"));
+  dispatch(reset("keychain"));
   dispatch(dehydrateAccounts());
 };
