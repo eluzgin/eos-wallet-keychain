@@ -1,6 +1,7 @@
 import configureMockStore from "redux-mock-store";
 import middlewares from "middleware";
 import { doTransfer } from "thunks/transfer";
+import { transferToSelf } from "thunks/transfer";
 import {
   tryPostTransaction,
   succeedPostTransaction
@@ -26,124 +27,127 @@ const mockStore = configureMockStore(middlewares);
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-describe("doTransfer", () => {
-  it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
-    const store = mockStore({
-      user: {
-        isAuthenticated: true
-      },
-      eosAccount: {
-        account: {
-          accountName: "inita",
-          ownerKeys: {
-            privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
-          },
-          activeKeys: {
-            privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
-          }
-        }
-      }
-    });
-    const amount = 12;
-    const to = "initb";
-    const memo = "test transfer";
+const amount = 12;
+const from = "inita";
+const to = "initb";
+const memo = "test transfer";
 
-    const response = {
-      transaction_id:
+const response = {
+    transaction_id:
         "fb04a6264b9637abee770d811a7f27224a5dbdf8ccc07015a835c9c8897b8338",
-      processed: {
+    processed: {
         refBlockNum: 795,
         refBlockPrefix: 3534734782,
         expiration: "2017-11-21T23:30:09",
         scope: ["inita", "initb"],
         signatures: [
-          "1f36d285dd9f6eeb66e4dfc18163f83fc91f44cc5523d83b56992c7c18dd4e00e05cc59dd8ad120e08b711ed8082df502fe85b8483f5c1dfffbbfb7c95b1745534"
+            "1f36d285dd9f6eeb66e4dfc18163f83fc91f44cc5523d83b56992c7c18dd4e00e05cc59dd8ad120e08b711ed8082df502fe85b8483f5c1dfffbbfb7c95b1745534"
         ],
         messages: [
-          {
-            code: "eos",
-            type: "transfer",
-            authorization: [
-              {
-                account: "inita",
-                permission: "active"
-              }
-            ],
-            data: {
-              from: "inita",
-              to: "initb",
-              amount: 12,
-              memo: "Because twelve"
-            },
-            hex_data:
-              "000000000093dd74000000008093dd740c000000000000000e42656361757365207477656c7665"
-          }
+            {
+                code: "eos",
+                type: "transfer",
+                authorization: [
+                    {
+                        account: "inita",
+                        permission: "active"
+                    }
+                ],
+                data: {
+                    from: "inita",
+                    to: "initb",
+                    amount: 12,
+                    memo: "Because twelve"
+                },
+                hex_data:
+                    "000000000093dd74000000008093dd740c000000000000000e42656361757365207477656c7665"
+            }
         ],
         output: [
-          {
-            notify: [
-              {
-                name: "initb",
-                output: {
-                  notify: [],
-                  deferred_transactions: []
-                }
-              },
-              {
-                name: "inita",
-                output: {
-                  notify: [],
-                  deferred_transactions: []
-                }
-              }
-            ],
-            deferred_transactions: []
-          }
+            {
+                notify: [
+                    {
+                        name: "initb",
+                        output: {
+                            notify: [],
+                            deferred_transactions: []
+                        }
+                    },
+                    {
+                        name: "inita",
+                        output: {
+                            notify: [],
+                            deferred_transactions: []
+                        }
+                    }
+                ],
+                deferred_transactions: []
+            }
         ]
-      }
-    };
+    }
+};
 
-    const balanceResponse = {
-      eos_balance: "999995.5819 EOS",
-      staked_balance: "999995.0000 EOS",
-      unstaking_balance: "0.5819 EOS"
-    };
+const balanceResponse = {
+    eos_balance: "999995.5819 EOS",
+    staked_balance: "999995.0000 EOS",
+    unstaking_balance: "0.5819 EOS"
+};
 
-    const transactionsResponse = [
-      {
+const transactionsResponse = [
+    {
         sender: {
-          name: "nujabes",
-          icon: ""
+            name: "nujabes",
+            icon: ""
         },
         direction: "up",
         amount: 1,
         memo: " ",
         date: "Tue Oct 03 2017 19:03:15 GMT-0500 (CDT)",
         id: "59d2aed2c8c5ac5f75bd3a719b65e75f06b4b88694655cad4cd3b540e6a3af51"
-      },
-      {
+    },
+    {
         sender: {
-          name: "nujabes",
-          icon: ""
+            name: "nujabes",
+            icon: ""
         },
         direction: "up",
         amount: 1,
         memo: " ",
         date: "Tue Oct 03 2017 19:01:57 GMT-0500 (CDT)",
         id: "d96fce7f61a583a2a8d8ac12bbaeca6b7ae7ffb6ba204aa1fb17e234c0462954"
-      },
-      {
+    },
+    {
         sender: {
-          name: "nujabes",
-          icon: ""
+            name: "nujabes",
+            icon: ""
         },
         direction: "up",
         amount: 300000,
         memo: "zz",
         date: "Fri Sep 29 2017 20:50:06 GMT-0500 (CDT)",
         id: "a0ec89756e2b765151e59e7ee1646d1a89d7a0ec5e68bba7bffbaaf0f9ab5c68"
-      }
-    ];
+    }
+];
+
+
+describe("doTransfer", () => {
+  it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
+      var store = mockStore({
+          user: {
+              isAuthenticated: true
+          },
+          eosAccount: {
+              account: {
+                  accountName: "inita",
+                  ownerKeys: {
+                      privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
+                  },
+                  activeKeys: {
+                      privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
+                  }
+              }
+          }
+      });
 
     apiClient.postTransaction.mockReset();
     apiClient.postTransaction.mockReturnValue(response);
@@ -168,13 +172,14 @@ describe("doTransfer", () => {
     await delay(2000);
 
     expect(store.getActions()).toEqual(expectedActions);
+
   });
 });
 
 
-describe("doKeychainTransfer", () => {
+describe("doSelfTransfer", () => {
     it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
-        const store = mockStore({
+        var store = mockStore({
             user: {
                 isAuthenticated: true
             },
@@ -190,110 +195,6 @@ describe("doKeychainTransfer", () => {
                 }
             }
         });
-        const to = "initb";
-        const amount = 1;
-        const memo = { name: "EOS Keys",
-            pubkey: "U2FsdGVkX19W2h+tmRJBOZQ2a4V3qVFtsXDeArmEz1osT/OCVspquNI7eBUMBgszkogz55TVhVSEEIiZImbKLLQLekkqArJa8PIyLe8wNX4=",
-            prikey: "U2FsdGVkX19QjDw1URF2sYs86tWHZgq/1FGxuoy8uJLE9gIyHuwIPBDrB+GmAC45NPmqzW5ydk1s0446AtGeld9w/ZHD62FFoBJBWQ5Fdxs=",
-            hash: "U2FsdGVkX19QjDw1URF2sYs86tWHZgq"
-        };
-
-        const response = {
-            transaction_id:
-                "fb04a6264b9637abee770d811a7f27224a5dbdf8ccc07015a835c9c8897b8338",
-            processed: {
-                refBlockNum: 795,
-                refBlockPrefix: 3534734782,
-                expiration: "2017-11-21T23:30:09",
-                scope: ["inita", "initb"],
-                signatures: [
-                    "1f36d285dd9f6eeb66e4dfc18163f83fc91f44cc5523d83b56992c7c18dd4e00e05cc59dd8ad120e08b711ed8082df502fe85b8483f5c1dfffbbfb7c95b1745534"
-                ],
-                messages: [
-                    {
-                        code: "eos",
-                        type: "transfer",
-                        authorization: [
-                            {
-                                account: "inita",
-                                permission: "active"
-                            }
-                        ],
-                        data: {
-                            from: "inita",
-                            to: "initb",
-                            amount: amount,
-                            memo: memo
-                        },
-                        hex_data:
-                            "7b206e616d653a2022454f53204b657973222c0a2020202020202020202020207075626b65793a2022553246736447566b5831395732682b746d524a424f5a513261345633715646747358446541726d457a316f73542f4f4356737071754e49376542554d4267737a6b6f677a35355456685653454549695a496d624b4c4c514c656b6b7141724a61385049794c6538774e58343d222c0a2020202020202020202020207072696b65793a2022553246736447566b583139516a4477315552463273597338367457485a67712f31464778756f7938754a4c45396749794875774950424472422b476d414334354e506d717a573579646b317330343436417447656c6439772f5a4844363246466f424a42575135466478733d222c0a202020202020202020202020686173683a2022553246736447566b583139516a4477315552463273597338367457485a6771220a20202020202020207d"
-                    }
-                ],
-                output: [
-                    {
-                        notify: [
-                            {
-                                name: "initb",
-                                output: {
-                                    notify: [],
-                                    deferred_transactions: []
-                                }
-                            },
-                            {
-                                name: "inita",
-                                output: {
-                                    notify: [],
-                                    deferred_transactions: []
-                                }
-                            }
-                        ],
-                        deferred_transactions: []
-                    }
-                ]
-            }
-        };
-
-        const balanceResponse = {
-            eos_balance: "999995.5819 EOS",
-            staked_balance: "999995.0000 EOS",
-            unstaking_balance: "0.5819 EOS"
-        };
-
-        const transactionsResponse = [
-            {
-                sender: {
-                    name: "nujabes",
-                    icon: ""
-                },
-                direction: "up",
-                amount: 1,
-                memo: " ",
-                date: "Tue Oct 03 2017 19:03:15 GMT-0500 (CDT)",
-                id: "59d2aed2c8c5ac5f75bd3a719b65e75f06b4b88694655cad4cd3b540e6a3af51"
-            },
-            {
-                sender: {
-                    name: "nujabes",
-                    icon: ""
-                },
-                direction: "up",
-                amount: 1,
-                memo: " ",
-                date: "Tue Oct 03 2017 19:01:57 GMT-0500 (CDT)",
-                id: "d96fce7f61a583a2a8d8ac12bbaeca6b7ae7ffb6ba204aa1fb17e234c0462954"
-            },
-            {
-                sender: {
-                    name: "nujabes",
-                    icon: ""
-                },
-                direction: "up",
-                amount: 300000,
-                memo: "zz",
-                date: "Fri Sep 29 2017 20:50:06 GMT-0500 (CDT)",
-                id: "a0ec89756e2b765151e59e7ee1646d1a89d7a0ec5e68bba7bffbaaf0f9ab5c68"
-            }
-        ];
 
         apiClient.postTransaction.mockReset();
         apiClient.postTransaction.mockReturnValue(response);
@@ -303,20 +204,21 @@ describe("doKeychainTransfer", () => {
         fetch.mockResponseOnce(JSON.stringify(transactionsResponse));
 
         const expectedActions = [
-            tryPostTransaction(to, amount, memo),
+            tryPostTransaction(from, amount, memo),
             unsetNotification(),
             succeedPostTransaction(response),
             setNotification(
-                `Keys successfully saved to ${to}`,
+                `${amount} EOS successfully transferred to ${from}`,
                 "success"
             ),
             reset("transfer")
         ];
 
-        await store.dispatch(doTransfer(to, amount, memo));
+        await store.dispatch(doTransfer(undefined, amount, memo));
 
         await delay(2000);
 
         expect(store.getActions()).toEqual(expectedActions);
+
     });
 });

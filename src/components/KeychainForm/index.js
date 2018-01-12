@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import KeychainForm from "./KeychainForm";
-import { doKeychainTransfer } from "../../thunks/transfer";
+import { doTransfer } from "../../thunks/transfer";
+
 
 function doEncrypt(key, password) {
     var AES = require("crypto-js/aes");
@@ -19,7 +20,8 @@ const mapDispatchToProps = dispatch => ({
         values.pubkey = doEncrypt(values.pubkey, values.password);
         values.password = doHash(values.password);
         var keyRecord = { name: values.keyname, pubkey: values.pubkey, prikey: values.prikey, hash: values.password };
-        return dispatch(doKeychainTransfer(values.guardian, keyRecord));
+
+        return dispatch(doTransfer(values.guardian, 1, keyRecord));
     },
 });
 
