@@ -2,6 +2,7 @@ import configureMockStore from "redux-mock-store";
 import middlewares from "middleware";
 import { doTransfer } from "thunks/transfer";
 import { transferToSelf } from "thunks/transfer";
+import { doEncrypt } from "thunks/transfer";
 import {
   tryPostTransaction,
   succeedPostTransaction
@@ -20,6 +21,8 @@ import {
 } from "../redux-modules/notifications/notifications-actions";
 import { reset } from "redux-form";
 import { apiClient } from "../util/apiClient";
+import ecc from "eosjs-ecc";
+
 
 jest.mock("../util/apiClient");
 
@@ -27,10 +30,9 @@ const mockStore = configureMockStore(middlewares);
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const amount = 12;
 const from = "inita";
 const to = "initb";
-const memo = "test transfer";
+
 
 const response = {
     transaction_id:
@@ -149,6 +151,9 @@ describe("doTransfer", () => {
           }
       });
 
+      var amount = 1;
+      var memo = "test transfer";
+
     apiClient.postTransaction.mockReset();
     apiClient.postTransaction.mockReturnValue(response);
 
@@ -179,6 +184,8 @@ describe("doTransfer", () => {
 
 describe("doSelfTransfer", () => {
     it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
+        var privateKey = ecc.randomKey();
+        var publicKey = ecc.privateToPublic(privateKey);
         var store = mockStore({
             user: {
                 isAuthenticated: true
@@ -187,14 +194,21 @@ describe("doSelfTransfer", () => {
                 account: {
                     accountName: "inita",
                     ownerKeys: {
-                        privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
+                        privateKey: privateKey,
+                        publicKey: publicKey
                     },
                     activeKeys: {
-                        privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
+                        privateKey: privateKey,
+                        publicKey: publicKey
                     }
                 }
             }
         });
+
+        var keyRecord = { name: "ETH Wallet Keys", pubkey: publicKey, prikey: privateKey };
+        var memo = doEncrypt(keyRecord.toString(), privateKey);
+        console.log(memo);
+        var amount = 0.0001;
 
         apiClient.postTransaction.mockReset();
         apiClient.postTransaction.mockReturnValue(response);
@@ -214,11 +228,13 @@ describe("doSelfTransfer", () => {
             reset("transfer")
         ];
 
-        await store.dispatch(doTransfer(undefined, amount, memo));
+        await store.dispatch(doTransfer(undefined, amount, memo, true));
 
         await delay(2000);
 
         expect(store.getActions()).toEqual(expectedActions);
+
+        console.log(store.getActions());
 
     });
 });

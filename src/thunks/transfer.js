@@ -3,25 +3,30 @@ import {
   tryPostTransaction,
   succeedPostTransaction,
   failPostTransaction
-} from "redux-modules/transfer/transfer-actions";
+} from "../redux-modules/transfer/transfer-actions";
 import { apiClient } from "../util/apiClient";
 import {
-  selectEOSAccountName,
-  selectEOSPrivateKeys,
+    selectEOSAccountName,
+    selectEOSPrivateKeys,
+    selectEOSActiveKeys,
 } from "../redux-modules/eos-account/account-selectors";
 import { setNotification } from "../redux-modules/notifications/notifications-actions";
-import ecc from "eosjs-ecc";
 
-export const encryptMemo = (memo) => async (getState) => {
-  var eosPrivateKeys = selectEOSPrivateKeys(getState());
-    return ecc.encrypt(eosPrivateKeys.activeKeys.privateKey, eosPrivateKeys.activeKeys.publicKey, memo);
+
+export const doEncrypt = (plain) => async(dispatch, getState) => {
+    var activeKeys = selectEOSActiveKeys(getState());
+    var AES = require("crypto-js/aes");
+    return AES.encrypt(plain, activeKeys.privateKey);
 };
 
-export const doTransfer = (to, amount, memo) => async (dispatch, getState) => {
+export const doTransfer = (to, amount, memo, encrypt = false) => async (dispatch, getState) => {
   apiClient.setKeyProvider(selectEOSPrivateKeys(getState()));
 
   const from = selectEOSAccountName(getState());
   if(to === undefined) to = from;
+  if(encrypt) {
+      memo = dispatch(doEncrypt(memo));
+  }
 
   const deciMilliEOS = amount * 10000;
 
