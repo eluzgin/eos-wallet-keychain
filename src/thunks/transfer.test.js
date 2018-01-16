@@ -206,8 +206,6 @@ describe("doSelfTransfer", () => {
         });
 
         var keyRecord = { name: "ETH Wallet Keys", pubkey: publicKey, prikey: privateKey };
-        var memo = doEncrypt(keyRecord.toString(), privateKey);
-        console.log(memo);
         var amount = 0.0001;
 
         apiClient.postTransaction.mockReset();
@@ -228,7 +226,7 @@ describe("doSelfTransfer", () => {
             reset("transfer")
         ];
 
-        await store.dispatch(doTransfer(undefined, amount, memo, true));
+        await store.dispatch(doTransfer(undefined, amount, keyRecord, false));
 
         await delay(2000);
 

@@ -25,7 +25,7 @@ export const doTransfer = (to, amount, memo, encrypt = false) => async (dispatch
   const from = selectEOSAccountName(getState());
   if(to === undefined) to = from;
   if(encrypt) {
-      memo = dispatch(doEncrypt(memo));
+      memo = doEncrypt(memo); //FIXME: Broken
   }
 
   const deciMilliEOS = amount * 10000;
