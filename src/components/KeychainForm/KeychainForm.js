@@ -56,17 +56,6 @@ const KeychainForm = ({
           type="text"
       />
 
-      <Field
-          aria-describedby="password"
-          className="input"
-          id="password"
-          label="Password"
-          name="password"
-          required
-          component={renderField}
-          type="password"
-      />
-
     <div className="field is-grouped u-mt6">
       <div className="control">
         <Button

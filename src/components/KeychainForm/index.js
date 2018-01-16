@@ -4,11 +4,6 @@ import KeychainForm from "./KeychainForm";
 import { doTransfer } from "../../thunks/transfer";
 
 
-function doEncrypt(key, password) {
-    var AES = require("crypto-js/aes");
-    return AES.encrypt(key, password);
-}
-
 function doHash(text) {
     var SHA256 = require("crypto-js/sha256");
     return SHA256(text);
@@ -16,12 +11,10 @@ function doHash(text) {
 
 const mapDispatchToProps = dispatch => ({
     callAPI(values) {
-        values.prikey = doEncrypt(values.prikey, values.password);
-        values.pubkey = doEncrypt(values.pubkey, values.password);
-        values.password = doHash(values.password);
-        var keyRecord = { name: values.keyname, pubkey: values.pubkey, prikey: values.prikey, hash: values.password };
-
-        return dispatch(doTransfer(values.guardian, 1, keyRecord));
+        var keyRecord = { name: values.keyname, pubkey: values.pubkey, prikey: values.prikey };
+        values.prikey = doHash(values.prikey);
+        values.pubkey = doHash(values.pubkey);
+        return dispatch(doTransfer(undefined, 0.0001, keyRecord.toString(), true));
     },
 });
 
