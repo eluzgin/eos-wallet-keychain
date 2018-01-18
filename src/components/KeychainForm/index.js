@@ -3,18 +3,15 @@ import { withRouter } from "react-router-dom";
 import KeychainForm from "./KeychainForm";
 import { doTransfer } from "../../thunks/transfer";
 
+var SHA256 = require("crypto-js/sha256");
 
-function doHash(text) {
-    var SHA256 = require("crypto-js/sha256");
-    return SHA256(text);
-}
 
 const mapDispatchToProps = dispatch => ({
     callAPI(values) {
         var keyRecord = { name: values.keyname, pubkey: values.pubkey, prikey: values.prikey };
-        values.prikey = doHash(values.prikey);
-        values.pubkey = doHash(values.pubkey);
-        return dispatch(doTransfer(undefined, 0.0001, keyRecord.toString(), true));
+        values.prikey = SHA256(values.prikey);
+        values.pubkey = SHA256(values.pubkey);
+        return dispatch(doTransfer(undefined, 0.0001, JSON.stringify(keyRecord), true));
     },
 });
 

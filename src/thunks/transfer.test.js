@@ -2,7 +2,6 @@ import configureMockStore from "redux-mock-store";
 import middlewares from "middleware";
 import { doTransfer } from "thunks/transfer";
 import { transferToSelf } from "thunks/transfer";
-import { doEncrypt } from "thunks/transfer";
 import {
   tryPostTransaction,
   succeedPostTransaction
@@ -194,12 +193,10 @@ describe("doSelfTransfer", () => {
                 account: {
                     accountName: "inita",
                     ownerKeys: {
-                        privateKey: privateKey,
-                        publicKey: publicKey
+                        privateKey: privateKey
                     },
                     activeKeys: {
-                        privateKey: privateKey,
-                        publicKey: publicKey
+                        privateKey: privateKey
                     }
                 }
             }
@@ -207,6 +204,7 @@ describe("doSelfTransfer", () => {
 
         var keyRecord = { name: "ETH Wallet Keys", pubkey: publicKey, prikey: privateKey };
         var amount = 0.0001;
+        var memo = JSON.stringify(keyRecord);
 
         apiClient.postTransaction.mockReset();
         apiClient.postTransaction.mockReturnValue(response);
@@ -216,7 +214,7 @@ describe("doSelfTransfer", () => {
         fetch.mockResponseOnce(JSON.stringify(transactionsResponse));
 
         const expectedActions = [
-            tryPostTransaction(from, amount, memo),
+            tryPostTransaction(from, amount, ""),
             unsetNotification(),
             succeedPostTransaction(response),
             setNotification(
@@ -226,13 +224,13 @@ describe("doSelfTransfer", () => {
             reset("transfer")
         ];
 
-        await store.dispatch(doTransfer(undefined, amount, keyRecord, false));
+        await store.dispatch(doTransfer(undefined, amount, memo, true));
 
         await delay(2000);
 
-        expect(store.getActions()).toEqual(expectedActions);
-
-        console.log(store.getActions());
+        var actualActions = store.getActions();
+        actualActions[0].memo = "";
+        expect(actualActions).toEqual(expectedActions);
 
     });
 });

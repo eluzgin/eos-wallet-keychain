@@ -7,25 +7,22 @@ import {
 import { apiClient } from "../util/apiClient";
 import {
     selectEOSAccountName,
-    selectEOSPrivateKeys,
-    selectEOSActiveKeys,
+    selectEOSPrivateKeys
 } from "../redux-modules/eos-account/account-selectors";
 import { setNotification } from "../redux-modules/notifications/notifications-actions";
 
 
-export const doEncrypt = (plain) => async(dispatch, getState) => {
-    var activeKeys = selectEOSActiveKeys(getState());
-    var AES = require("crypto-js/aes");
-    return AES.encrypt(plain, activeKeys.privateKey);
-};
-
 export const doTransfer = (to, amount, memo, encrypt = false) => async (dispatch, getState) => {
-  apiClient.setKeyProvider(selectEOSPrivateKeys(getState()));
+  var privateKeys = selectEOSPrivateKeys(getState());
+  apiClient.setKeyProvider(privateKeys);
 
   const from = selectEOSAccountName(getState());
   if(to === undefined) to = from;
   if(encrypt) {
-      memo = doEncrypt(memo); //FIXME: Broken
+      var AES = require("crypto-js/aes");
+      var key = privateKeys[0];
+      var encryptedObj = AES.encrypt(memo, key);
+      memo = encryptedObj.toString();
   }
 
   const deciMilliEOS = amount * 10000;
