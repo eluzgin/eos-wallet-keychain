@@ -1,4 +1,4 @@
-# EOS Web Wallet &nbsp; [![Build Status](https://travis-ci.org/Tandemly/eos-web-wallet.svg?branch=develop)](https://travis-ci.org/Tandemly/eos-web-wallet)
+# EOS Web Wallet &nbsp; [![Build Status](https://travis-ci.org/eluzgin/eos-wallet-keychain.svg?branch=master)](https://travis-ci.org/eluzgin/eos-wallet-keychain)
 
 This is the web based wallet for EOS. The goal of the web wallet is to eventually be a multi-token wallet; but for now
 is aiming to support the most recent version of EOS with some basic wallet features.
@@ -14,7 +14,7 @@ is aiming to support the most recent version of EOS with some basic wallet featu
 
 ## Environment & Requirements
 This web wallet assumes that there is an EOS network that you want to connect to and 
-an host running an instance of the [EOS API Service](https://github.com/Tandemly/eos-api-service) connected to that same EOS network.
+an host running an instance of the [EOS API Service](https://github.com/eluzgin/eos-api-service) connected to that same EOS network.
 
 
 The Web Wallet is a standard create-react-app React application with the addition 
@@ -64,7 +64,7 @@ database and can be hosted and scaled to meet processing, user and network needs
 See the [EOS repository](https://github.com/EOSIO/eos) for more information about setting up and running an `eosd` instance.
 
 ### EOS API Service
-The wallet will also need the [EOS API service](https://github.com/Tandemly/eos-api-service) 
+The wallet will also need the [EOS API service](https://github.com/eluzgin/eos-api-service) 
 hosted somewhere and connected to the same `eosd` node and database as above. 
 The API service can be configured to point to the proper `eosd` node and mongo database 
 using the following settings in a local `.env` file. 
@@ -93,7 +93,7 @@ You can use the provided `.env.example` file to get started.
 First, clone the application from the repo and create the local `.env` file:
 
 ```bash
-$ git clone https://github.com/Tandemly/eos-wallet-wip.git
+$ git clone https://github.com/eluzgin/eos-wallet-keychain.git
 $ cd eos-wallet-aip
 $ cp .env.example .env
 ```
