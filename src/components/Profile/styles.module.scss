@@ -10,11 +10,17 @@
   .heading {
     font-size: 22px;
     font-weight: bold;
+    color: $white;
     text-transform: none;
+    word-break: break-all;
+    letter-spacing: 0;
   }
   .title {
     font-size: 18px;
     color: $white;
     margin-bottom: 0.5rem;
+  }
+  a {
+    word-break: break-all;
   }
 }

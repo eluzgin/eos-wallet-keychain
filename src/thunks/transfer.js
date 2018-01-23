@@ -3,11 +3,11 @@ import {
   tryPostTransaction,
   succeedPostTransaction,
   failPostTransaction
-} from "../redux-modules/transfer/transfer-actions";
+} from "redux-modules/transfer/transfer-actions";
 import { apiClient } from "../util/apiClient";
 import {
-    selectEOSAccountName,
-    selectEOSPrivateKeys
+  selectEOSAccountName,
+  selectEOSPrivateKeys
 } from "../redux-modules/eos-account/account-selectors";
 import { setNotification } from "../redux-modules/notifications/notifications-actions";
 

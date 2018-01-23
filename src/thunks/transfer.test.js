@@ -13,7 +13,7 @@ import {
 import {
   tryGetBalance,
   succeedGetBalance
-} from "redux-modules/eos-account/balance-actions";
+} from "redux-modules/eos-balances/balance-actions";
 import {
   setNotification,
   unsetNotification
@@ -21,7 +21,6 @@ import {
 import { reset } from "redux-form";
 import { apiClient } from "../util/apiClient";
 import ecc from "eosjs-ecc";
-
 
 jest.mock("../util/apiClient");
 

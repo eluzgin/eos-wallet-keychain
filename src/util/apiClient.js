@@ -198,7 +198,6 @@ class APIClient {
       return Promise.reject(err.statusText || err);
     }
   }
-
 }
 
 // Export singleton instance
