@@ -13,7 +13,7 @@ import {
 import {
   tryGetBalance,
   succeedGetBalance
-} from "redux-modules/eos-account/balance-actions";
+} from "redux-modules/eos-balances/balance-actions";
 import {
   setNotification,
   unsetNotification
@@ -22,16 +22,11 @@ import { reset } from "redux-form";
 import { apiClient } from "../util/apiClient";
 import ecc from "eosjs-ecc";
 
-
 jest.mock("../util/apiClient");
 
 const mockStore = configureMockStore(middlewares);
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-const from = "inita";
-const to = "initb";
-
 
 const response = {
     transaction_id:
@@ -130,28 +125,25 @@ const transactionsResponse = [
     }
 ];
 
-
 describe("doTransfer", () => {
   it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
-      var store = mockStore({
-          user: {
-              isAuthenticated: true
-          },
-          eosAccount: {
-              account: {
-                  accountName: "inita",
-                  ownerKeys: {
-                      privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
-                  },
-                  activeKeys: {
-                      privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
-                  }
-              }
-          }
-      });
-
-      var amount = 1;
-      var memo = "test transfer";
+    const store = mockStore({
+      user: {
+        isAuthenticated: true
+      },
+      eosAccount: {
+        accountName: "inita",
+        ownerKeys: {
+          privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
+        },
+        activeKeys: {
+          privateKey: "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
+        }
+      }
+    });
+    const amount = 12;
+    const to = "initb";
+    const memo = "test transfer";
 
     apiClient.postTransaction.mockReset();
     apiClient.postTransaction.mockReturnValue(response);
@@ -185,19 +177,17 @@ describe("doSelfTransfer", () => {
     it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
         var privateKey = ecc.randomKey();
         var publicKey = ecc.privateToPublic(privateKey);
-        var store = mockStore({
+        const store = mockStore({
             user: {
                 isAuthenticated: true
             },
             eosAccount: {
-                account: {
-                    accountName: "inita",
-                    ownerKeys: {
-                        privateKey: privateKey
-                    },
-                    activeKeys: {
-                        privateKey: privateKey
-                    }
+                accountName: "inita",
+                ownerKeys: {
+                    privateKey: privateKey
+                },
+                activeKeys: {
+                    privateKey: privateKey
                 }
             }
         });
@@ -205,6 +195,7 @@ describe("doSelfTransfer", () => {
         var keyRecord = { name: "ETH Wallet Keys", pubkey: publicKey, prikey: privateKey };
         var amount = 0.0001;
         var memo = JSON.stringify(keyRecord);
+	    const from = "inita";
 
         apiClient.postTransaction.mockReset();
         apiClient.postTransaction.mockReturnValue(response);
