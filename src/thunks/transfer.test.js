@@ -215,7 +215,60 @@ describe("doSelfTransfer", () => {
             reset("transfer")
         ];
 
-        await store.dispatch(doTransfer(undefined, amount, memo, true));
+        await store.dispatch(doTransfer(undefined, amount, memo));
+
+        await delay(2000);
+
+        var actualActions = store.getActions();
+        actualActions[0].memo = "";
+        expect(actualActions).toEqual(expectedActions);
+
+    });
+});
+
+describe("doSelfTransfer", () => {
+    it("on successful transaction POST, dispatches succeedPostTransaction action", async () => {
+        var privateKey = ecc.randomKey();
+        var publicKey = ecc.privateToPublic(privateKey);
+        const store = mockStore({
+            user: {
+                isAuthenticated: true
+            },
+            eosAccount: {
+                accountName: "inita",
+                ownerKeys: {
+                    privateKey: privateKey
+                },
+                activeKeys: {
+                    privateKey: privateKey
+                }
+            }
+        });
+
+        var keyRecord = { name: "ETH Wallet Keys", pubkey: publicKey, prikey: privateKey };
+        var amount = 0.0001;
+        var memo = JSON.stringify(keyRecord);
+        const from = "inita";
+
+        apiClient.postTransaction.mockReset();
+        apiClient.postTransaction.mockReturnValue(response);
+
+        fetch.resetMocks();
+        fetch.mockResponseOnce(JSON.stringify(balanceResponse));
+        fetch.mockResponseOnce(JSON.stringify(transactionsResponse));
+
+        const expectedActions = [
+            tryPostTransaction(from, amount, ""),
+            unsetNotification(),
+            succeedPostTransaction(response),
+            setNotification(
+                `${amount} EOS successfully transferred to ${from}`,
+                "success"
+            ),
+            reset("transfer")
+        ];
+
+        await store.dispatch(doTransfer(undefined, amount, memo));
 
         await delay(2000);
 
