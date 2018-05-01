@@ -6833,7 +6833,7 @@ node-dir@^0.1.10:
   dependencies:
     minimatch "^3.0.2"
 
-node-fetch@^1.0.1:
+node-fetch@^1.0.1, node-fetch@^1.3.3:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
   dependencies:
@@ -6893,6 +6893,12 @@ node-libs-browser@^2.0.0:
     url "^0.11.0"
     util "^0.10.3"
     vm-browserify "0.0.4"
+
+node-localstorage@~1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/node-localstorage/-/node-localstorage-1.3.0.tgz#2e436aae8dcc9ace97b43c65c16c0d577be0a55c"
+  dependencies:
+    write-file-atomic "^1.1.4"
 
 node-notifier@^5.0.2:
   version "5.1.2"
@@ -7189,6 +7195,13 @@ onetime@^2.0.0:
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
   dependencies:
     mimic-fn "^1.0.0"
+
+openpgp@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/openpgp/-/openpgp-2.6.2.tgz#1039d5070dc01c04e51fab58273fdf29a1ee098b"
+  dependencies:
+    node-fetch "^1.3.3"
+    node-localstorage "~1.3.0"
 
 opn@5.1.0, opn@^5.1.0:
   version "5.1.0"

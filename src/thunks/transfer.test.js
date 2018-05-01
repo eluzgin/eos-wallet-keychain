@@ -215,7 +215,7 @@ describe("doSelfTransfer", () => {
             reset("transfer")
         ];
 
-        await store.dispatch(doTransfer(undefined, amount, memo, true));
+        await store.dispatch(doTransfer(undefined, amount, memo));
 
         await delay(2000);
 

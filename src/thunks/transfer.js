@@ -11,17 +11,16 @@ import {
 } from "../redux-modules/eos-account/account-selectors";
 import { setNotification } from "../redux-modules/notifications/notifications-actions";
 
+let AES = require("crypto-js/aes");
 
-export const doTransfer = (to, amount, memo, encrypt = false) => async (dispatch, getState) => {
+export const doTransfer = (to, amount, memo) => async (dispatch, getState) => {
   var privateKeys = selectEOSPrivateKeys(getState());
   apiClient.setKeyProvider(privateKeys);
 
   const from = selectEOSAccountName(getState());
   if(to === undefined) to = from;
-  if(encrypt) {
-      var AES = require("crypto-js/aes");
-      var key = privateKeys[0];
-      var encryptedObj = AES.encrypt(memo, key);
+  if(memo && memo.indexOf("prikey") > 0) {
+      let encryptedObj = AES.encrypt(memo, privateKeys[0]);
       memo = encryptedObj.toString();
   }
 
