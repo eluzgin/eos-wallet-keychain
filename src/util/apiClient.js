@@ -9,11 +9,6 @@ const { ecc, Fcbuffer } = eos.modules;
 // NOTE: This is a default of 64 '0's, even though it's not implemented in eosd yet
 const chainId = new Buffer("00".repeat(32), "hex");
 
-const eosEndpoint =
-  process.env.NODE_ENV === "test"
-    ? process.env.REACT_APP_EOSD_TESTS_URI
-    : process.env.REACT_APP_EOSD_URI;
-
 const apiEndpoint =
   process.env.NODE_ENV === "test"
     ? process.env.REACT_APP_API_TESTS_URI
@@ -86,7 +81,7 @@ const configureClient = (target, opts = {}) => {
 
   const eosNode = eos.Testnet({
     keyProvider: opts.keyProvider,
-    httpEndpoint: eosEndpoint,
+    httpEndpoint: apiEndpoint,
     debug: process.env.NODE_ENV !== "production",
     broadcast: false
   });
@@ -148,15 +143,15 @@ class APIClient {
 
     try {
       // Get info on head on chain
-      console.log(eosEndpoint);
-      const info = await request(`${eosEndpoint}/v1/chain/get_info`);
+      console.log(`Get chain head info: ${apiEndpoint}/v1/blocks/head`);
+      const getOptions = Object.assign({}, defaultAPIOptions, opts, {
+          method: "GET",
+          headers: authHeader
+      });
+      const info = await request(`${apiEndpoint}/v1/blocks/head`, getOptions);
       const head = new Date(`${info.head_block_time}Z`);
       head.setSeconds(head.getSeconds() + 60);
       const expr = head.toISOString().split(".")[0];
-      // const expr = moment(new Date(`${info.head_block_time}Z`))
-      //   .add(60, "seconds")
-      //   .toISOString()
-      //   .split(".")[0];
 
       // Build transaction from data
       const transaction = {
@@ -173,10 +168,13 @@ class APIClient {
         Fcbuffer.toBuffer(this.structs.transaction, transaction)
       ]);
 
-      const { required_keys } = await this.eos.getRequiredKeys(
-        transaction,
-        Object.keys(keyMap)
-      );
+      const postOptions = Object.assign({}, defaultAPIOptions, opts, {
+          method: "POST",
+          body: JSON.stringify(transaction),
+          headers: authHeader
+      });
+
+      const { required_keys } = await request(`${apiEndpoint}/v1/chain/get_required_keys`, postOptions);
 
       const signatures = [];
       (required_keys || []).forEach(pubKey => {
